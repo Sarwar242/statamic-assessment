@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="{{ site:short_locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title ?? site:name }}</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    {{ vite src="resources/css/site.css" }}
+    {{ vite src="resources/js/site.js" }}
+</head>
+<body class="font-sans antialiased bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center">
+                        <a href="/" class="text-xl font-bold text-primary-600">
+                            {{ site:name }}
+                        </a>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="/" class="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
+                        <a href="/blog" class="text-gray-600 hover:text-gray-900 transition-colors">Blog</a>
+                        <a href="/cards" class="text-gray-600 hover:text-gray-900 transition-colors">Cards</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            {{ template_content }}
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-8 mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p>&copy; {{ now format="Y" }} {{ site:name }}. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
