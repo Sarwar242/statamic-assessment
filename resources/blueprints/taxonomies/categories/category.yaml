@@ -1,0 +1,35 @@
+title: 'Category'
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          display: 'Title'
+          validate: required
+      -
+        handle: slug
+        field:
+          type: slug
+          display: 'Slug'
+          validate: required
+      -
+        handle: description
+        field:
+          type: textarea
+          display: 'Description'
+          rows: 3
+      -
+        handle: color
+        field:
+          type: select
+          display: 'Color'
+          options:
+            blue: 'Blue'
+            green: 'Green'
+            purple: 'Purple'
+            red: 'Red'
+            yellow: 'Yellow'
+          default: blue 

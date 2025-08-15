@@ -11,9 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Assets -->
-    <link rel="stylesheet" href="/build/assets/site-L3dAvyiR.css">
-    <script src="/build/assets/site-Dlw55EJJ.js" defer></script>
+    <!-- Assets - Using Vite for automatic versioning -->
+    {{ vite src="resources/js/site.js|resources/css/site.css" }}
 </head>
 <body class="font-sans antialiased bg-gray-50">
     <div class="min-h-screen">

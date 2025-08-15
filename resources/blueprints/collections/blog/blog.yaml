@@ -1,0 +1,71 @@
+title: 'Blog Post'
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          display: 'Title'
+          validate: required
+      -
+        handle: slug
+        field:
+          type: slug
+          display: 'Slug'
+          validate: required
+      -
+        handle: excerpt
+        field:
+          type: textarea
+          display: 'Excerpt'
+          rows: 3
+          validate: required
+      -
+        handle: content
+        field:
+          type: markdown
+          display: 'Content'
+          validate: required
+      -
+        handle: featured_image
+        field:
+          type: assets
+          container: blog
+          folder: images
+          max_files: 1
+          display: 'Featured Image'
+      -
+        handle: author_name
+        field:
+          type: text
+          display: 'Author Name'
+          validate: required
+      -
+        handle: published_at
+        field:
+          type: date
+          display: 'Published Date'
+          validate: required
+          format: 'Y-m-d'
+      -
+        handle: categories
+        field:
+          type: terms
+          taxonomies: categories
+          display: 'Categories'
+          mode: select
+          multiple: true
+      -
+        handle: featured
+        field:
+          type: toggle
+          display: 'Featured Post'
+          default: false
+      -
+        handle: seo_description
+        field:
+          type: textarea
+          display: 'SEO Description'
+          rows: 2 

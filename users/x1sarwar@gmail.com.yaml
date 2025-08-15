@@ -2,3 +2,6 @@ name: sarwar
 super: true
 id: cb003be2-4121-4420-8b9e-72f9c726f90c
 password_hash: $2y$12$pMHW9wUJGpKOWYoDCMKyi.b1528nU0Cn4mS5jV96/Yyd46Yaa6Kke
+preferences:
+  locale: en
+  favorites: {  }

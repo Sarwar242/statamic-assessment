@@ -12,6 +12,21 @@
 
         <!-- Search and Filter Section -->
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-8" x-data="blogOverview">
+            <!-- Alpine.js Test -->
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                <p><strong>Alpine.js Test:</strong></p>
+                <p>If you see this changing, Alpine.js is working: <span x-text="'Alpine is working! Count: ' + (blogs.length || 0)"></span></p>
+                <p>Component initialized: <span x-text="'YES - blogs array length: ' + blogs.length"></span></p>
+                <button @click="blogs.push({id: 'test', title: 'Test Post'})" class="bg-green-600 text-white px-2 py-1 rounded text-sm">
+                    Add Test Post
+                </button>
+                <button @click="console.log('getFilteredBlogs test:', getFilteredBlogs())" class="bg-blue-600 text-white px-2 py-1 rounded text-sm ml-2">
+                    Test getFilteredBlogs
+                </button>
+                <button @click="selectedCategory = 'all'; console.log('Changed to all, getFilteredBlogs:', getFilteredBlogs())" class="bg-purple-600 text-white px-2 py-1 rounded text-sm ml-2">
+                    Reset Category
+                </button>
+            </div>
             <!-- Search Bar -->
             <div class="mb-6">
                 <div class="relative max-w-md mx-auto">
@@ -49,9 +64,38 @@
                 </template>
             </div>
 
+            <!-- Debug Information -->
+            <!-- <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+                <p><strong>Debug Info:</strong></p>
+                <p>Total blogs loaded: <span x-text="blogs.length"></span></p>
+                <p>Filtered blogs: <span x-text="getFilteredBlogs().length"></span></p>
+                <p>Selected category: <span x-text="selectedCategory"></span></p>
+                <p>Search query: <span x-text="searchQuery"></span></p>
+                <p>Loading: <span x-text="loading"></span></p>
+                <p><strong>Blogs array type:</strong> <span x-text="Array.isArray(blogs) ? 'Array' : typeof blogs"></span></p>
+                <p><strong>First blog data:</strong></p>
+                <pre x-text="blogs.length > 0 ? JSON.stringify(blogs[0], null, 2) : 'No blogs'"></pre>
+            </div> -->
+
+            <!-- Loading State -->
+            <div x-show="loading" class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                <p class="mt-2 text-gray-600">Loading articles...</p>
+            </div>
+
             <!-- Blog Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <template x-for="blog in filteredBlogs" :key="blog.id">
+                <!-- Test getFilteredBlogs output -->
+                <div class="col-span-full bg-green-100 p-4 rounded">
+                    <p><strong>getFilteredBlogs Test:</strong></p>
+                    <p>Method result length: <span x-text="getFilteredBlogs().length"></span></p>
+                    <p>First filtered blog: <span x-text="getFilteredBlogs().length > 0 ? getFilteredBlogs()[0].title : 'No filtered blogs'"></span></p>
+                    <button @click="console.log('getFilteredBlogs result:', getFilteredBlogs())" class="bg-green-600 text-white px-2 py-1 rounded text-sm">
+                        Log to Console
+                    </button>
+                </div>
+                
+                <template x-for="blog in getFilteredBlogs()" :key="blog.id">
                     <article 
                         class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                         x-show="true"
@@ -62,7 +106,7 @@
                         <!-- Featured Image -->
                         <div class="relative h-48 bg-gray-200">
                             <img 
-                                :src="blog.featured_image ? `/assets/${blog.featured_image}` : '/assets/placeholder.jpg'"
+                                :src="blog.featured_image ? `/assets/${blog.featured_image}` : '/assets/blog/images/placeholder.jpg'"
                                 :alt="blog.title"
                                 class="w-full h-full object-cover"
                             >
@@ -70,7 +114,7 @@
                                 <span 
                                     x-show="blog.categories && blog.categories.length > 0"
                                     class="inline-block px-3 py-1 text-xs font-semibold text-white bg-primary-600 rounded-full"
-                                    x-text="blog.categories[0].title"
+                                    x-text="getFirstCategory(blog.categories) ? getFirstCategory(blog.categories).title : ''"
                                 ></span>
                             </div>
                         </div>
@@ -107,8 +151,18 @@
             </div>
 
             <!-- No Results Message -->
-            <div x-show="filteredBlogs.length === 0" class="text-center py-12">
+            <div x-show="!loading && getFilteredBlogs().length === 0" class="text-center py-12">
                 <p class="text-gray-500 text-lg">No articles found.</p>
+            </div>
+
+            <!-- Load More Button -->
+            <div x-show="!loading && hasMore" class="text-center mt-12">
+                <button 
+                    @click="loadMore()"
+                    class="px-8 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors duration-200 transform hover:scale-105"
+                    x-text="loadingMore ? 'Loading...' : 'Load More Articles'"
+                    :disabled="loadingMore"
+                ></button>
             </div>
         </div>
     </div>
@@ -120,52 +174,136 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('blogOverview', () => ({
         searchQuery: '',
         selectedCategory: 'all',
-        blogs: [
-            {
-                id: 1,
-                title: 'Sustainable Energy Solutions for the Future',
-                excerpt: 'Discover how modern technologies help us transition to sustainable energy sources and create a greener future.',
-                featured_image: 'placeholder.jpg',
-                categories: [{ title: 'Sustainability', slug: 'sustainability' }],
-                author_name: 'John Johnson',
-                published_at: '2024-01-15',
-                slug: 'sustainable-energy-solutions'
-            },
-            {
-                id: 2,
-                title: 'Climate Cabinet Installation Guide',
-                excerpt: 'Step-by-step guide for installing your new climate cabinet and optimizing energy efficiency.',
-                featured_image: 'placeholder.jpg',
-                categories: [{ title: 'Installation', slug: 'installation' }],
-                author_name: 'Peter Peterson',
-                published_at: '2024-01-10',
-                slug: 'climate-cabinet-installation-guide'
-            },
-            {
-                id: 3,
-                title: 'Innovative Climate Technology',
-                excerpt: 'Explore the latest developments in climate technology and how they contribute to a more sustainable world.',
-                featured_image: 'placeholder.jpg',
-                categories: [{ title: 'Technology', slug: 'technology' }],
-                author_name: 'Mary de Vries',
-                published_at: '2024-01-05',
-                slug: 'innovative-climate-technology'
-            }
-        ],
-        categories: [
-            { id: 1, title: 'Sustainability', slug: 'sustainability' },
-            { id: 2, title: 'Technology', slug: 'technology' },
-            { id: 3, title: 'Installation', slug: 'installation' }
-        ],
+        blogs: [],
+        categories: [],
+        loading: true,
+        loadingMore: false,
+        currentPage: 1,
+        totalPages: 1,
+        hasMore: false,
 
-        get filteredBlogs() {
-            let filtered = this.blogs;
+        async init() {
+            await this.loadBlogs();
+            await this.loadCategories();
+            this.loading = false;
+        },
+
+        async loadBlogs() {
+            try {
+                let url = `/api/collections/blog/entries?page=${this.currentPage}`;
+                if (this.selectedCategory !== 'all') {
+                    url += `&filter[categories:contains]=${this.selectedCategory}`;
+                }
+                if (this.searchQuery) {
+                    url += `&filter[title:contains]=${this.searchQuery}`;
+                }
+                
+                console.log('Fetching from URL:', url);
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                if (this.currentPage === 1) {
+                    this.blogs = data.data || [];
+                } else {
+                    this.blogs.push(...(data.data || []));
+                }
+                
+                console.log('Blogs array after update:', this.blogs);
+                console.log('Filtered blogs:', this.getFilteredBlogs());
+                
+                this.totalPages = data.meta?.last_page || 1;
+                this.hasMore = this.currentPage < this.totalPages;
+            } catch (error) {
+                console.error('Error loading blogs:', error);
+                // Fallback to static data if API fails
+                this.loadFallbackData();
+            }
+        },
+
+        async loadCategories() {
+            try {
+                const response = await fetch('/api/taxonomies/categories/terms');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                this.categories = data.data || [];
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                // Fallback to static categories
+                this.categories = [
+                    { id: 1, title: 'Sustainability', slug: 'sustainability' },
+                    { id: 2, title: 'Technology', slug: 'technology' },
+                    { id: 3, title: 'Installation', slug: 'installation' }
+                ];
+            }
+        },
+
+        loadFallbackData() {
+            this.blogs = [
+                {
+                    id: 1,
+                    title: 'Sustainable Energy Solutions for the Future',
+                    excerpt: 'Discover how modern technologies help us transition to sustainable energy sources and create a greener future.',
+                    featured_image: 'blog/images/placeholder.jpg',
+                    categories: ['sustainability', 'technology'],
+                    author_name: 'John Johnson',
+                    published_at: '2024-01-15',
+                    slug: 'sustainable-energy-solutions'
+                },
+                {
+                    id: 2,
+                    title: 'Climate Cabinet Installation Guide',
+                    excerpt: 'Step-by-step guide for installing your new climate cabinet and optimizing energy efficiency.',
+                    featured_image: 'blog/images/placeholder.jpg',
+                    categories: ['installation', 'sustainability'],
+                    author_name: 'Peter Peterson',
+                    published_at: '2024-01-10',
+                    slug: 'climate-cabinet-installation-guide'
+                },
+                {
+                    id: 3,
+                    title: 'Innovative Climate Technology',
+                    excerpt: 'Explore the latest developments in climate technology and how they contribute to a more sustainable world.',
+                    featured_image: 'blog/images/placeholder.jpg',
+                    categories: ['technology', 'sustainability'],
+                    author_name: 'Mary de Vries',
+                    published_at: '2024-01-05',
+                    slug: 'innovative-climate-technology'
+                }
+            ];
+        },
+
+        // Convert to regular method instead of computed property
+        getFilteredBlogs() {
+            console.log('getFilteredBlogs called with blogs:', this.blogs);
+            
+            // Ensure blogs is an array
+            if (!this.blogs || !Array.isArray(this.blogs)) {
+                console.log('Blogs is not an array, returning empty');
+                return [];
+            }
+            
+            let filtered = [...this.blogs]; // Create a copy
             
             // Filter by category
             if (this.selectedCategory !== 'all') {
-                filtered = filtered.filter(blog => 
-                    blog.categories.some(cat => cat.slug === this.selectedCategory)
-                );
+                console.log('Filtering by category:', this.selectedCategory);
+                filtered = filtered.filter(blog => {
+                    if (!blog.categories || !Array.isArray(blog.categories)) {
+                        console.log('Blog has no categories:', blog.title);
+                        return false;
+                    }
+                    const hasCategory = blog.categories.some(cat => 
+                        typeof cat === 'string' ? cat === this.selectedCategory : cat.slug === this.selectedCategory
+                    );
+                    console.log(`Blog "${blog.title}" has category ${this.selectedCategory}:`, hasCategory);
+                    return hasCategory;
+                });
             }
             
             // Filter by search query
@@ -177,16 +315,69 @@ document.addEventListener('alpine:init', () => {
                 );
             }
             
+            console.log('getFilteredBlogs returning:', filtered.length, 'blogs');
             return filtered;
         },
 
-        filterByCategory(category) {
-            this.selectedCategory = category;
+        // Keep computed property for backward compatibility
+        get filteredBlogs() {
+            return this.getFilteredBlogs();
         },
 
-        search() {
-            // Search is handled by the computed filteredBlogs property
-            console.log('Searching for:', this.searchQuery);
+        // Helper function to get category title for display
+        getCategoryTitle(categories, categorySlug) {
+            if (!categories || !Array.isArray(categories)) return '';
+            
+            // Find the category by slug
+            const category = categories.find(cat => 
+                typeof cat === 'string' ? cat === categorySlug : cat.slug === categorySlug
+            );
+            
+            if (typeof category === 'string') {
+                return category;
+            } else if (category && category.title) {
+                return category.title;
+            }
+            
+            return categorySlug;
+        },
+
+        // Helper function to get first category for display
+        getFirstCategory(categories) {
+            if (!categories || !Array.isArray(categories) || categories.length === 0) return null;
+            
+            const firstCat = categories[0];
+            if (typeof firstCat === 'string') {
+                return { title: firstCat, slug: firstCat };
+            } else if (firstCat && firstCat.title && firstCat.slug) {
+                return firstCat;
+            }
+            
+            return null;
+        },
+
+        async filterByCategory(category) {
+            this.selectedCategory = category;
+            this.currentPage = 1;
+            this.loading = true;
+            await this.loadBlogs();
+            this.loading = false;
+        },
+
+        async search() {
+            this.currentPage = 1;
+            this.loading = true;
+            await this.loadBlogs();
+            this.loading = false;
+        },
+
+        async loadMore() {
+            if (this.currentPage < this.totalPages) {
+                this.loadingMore = true;
+                this.currentPage++;
+                await this.loadBlogs();
+                this.loadingMore = false;
+            }
         },
 
         formatDate(dateString) {
