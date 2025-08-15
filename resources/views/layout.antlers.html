@@ -11,26 +11,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    {{ vite src="resources/css/site.css" }}
-    {{ vite src="resources/js/site.js" }}
+    <!-- Assets -->
+    <link rel="stylesheet" href="/build/assets/site-L3dAvyiR.css">
+    <script src="/build/assets/site-Dlw55EJJ.js" defer></script>
 </head>
 <body class="font-sans antialiased bg-gray-50">
     <div class="min-h-screen">
         <!-- Navigation -->
-        <nav class="bg-white shadow-sm">
+        <nav class="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center py-4">
                     <div class="flex items-center">
-                        <a href="/" class="text-xl font-bold text-primary-600">
+                        <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors duration-200">
                             {{ site:name }}
                         </a>
                     </div>
-                    <div class="flex space-x-6">
-                        <a href="/" class="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
-                        <a href="/blog" class="text-gray-600 hover:text-gray-900 transition-colors">Blog</a>
-                        <a href="/cards" class="text-gray-600 hover:text-gray-900 transition-colors">Cards</a>
+                    <div class="hidden md:flex space-x-8">
+                        <a href="/" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Home</a>
+                        <a href="/blog" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Blog</a>
+                        <a href="/cards" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Services</a>
+                    </div>
+                    
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden">
+                        <button class="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
+                
+                <!-- Mobile menu -->
+                <!-- <div class="md:hidden border-t border-gray-200 pt-4 pb-3">
+                    <div class="flex flex-col space-y-3">
+                        <a href="/" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Home</a>
+                        <a href="/blog" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Blog</a>
+                        <a href="/cards" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Services</a>
+                    </div>
+                </div> -->
             </div>
         </nav>
 
@@ -47,4 +66,4 @@
         </footer>
     </div>
 </body>
-</html>
+</html> 

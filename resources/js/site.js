@@ -1,5 +1,6 @@
 import Alpine from 'alpinejs';
-import { Swiper, Navigation, Pagination } from 'swiper';
+import Swiper from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
 
 // Configure Swiper
 Swiper.use([Navigation, Pagination]);

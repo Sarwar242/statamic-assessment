@@ -8,13 +8,10 @@ export default defineConfig({
                 'resources/css/site.css',
                 'resources/js/site.js',
             ],
-            refresh: [
-                'resources/views/**',
-                'content/**',
-                'users/**',
-                'resources/blueprints/**',
-                'resources/fieldsets/**',
-            ],
+            refresh: true,
         }),
     ],
+    css: {
+        postcss: './postcss.config.js',
+    },
 });
