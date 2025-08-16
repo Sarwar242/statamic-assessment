@@ -15,6 +15,7 @@ sections:
           type: slug
           display: 'Slug'
           validate: required
+          generate: true
       -
         handle: excerpt
         field:
@@ -49,6 +50,8 @@ sections:
           display: 'Published Date'
           validate: required
           format: 'Y-m-d'
+          time_enabled: false
+          time_seconds_enabled: false
       -
         handle: categories
         field:
@@ -57,6 +60,8 @@ sections:
           display: 'Categories'
           mode: select
           multiple: true
+          max_items: 5
+          create: false
       -
         handle: featured
         field:

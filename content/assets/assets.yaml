@@ -1,3 +1,4 @@
-title: 'Assets'
+title: Assets
 disk: local
-container: assets 
+allow_uploads: true
+create_folders: true

@@ -22,27 +22,40 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Blog Collection API
 Route::get('/collections/blog', function (Request $request) {
-    $query = Entry::query()->collection('blog')->published();
+    // In Statamic 5, we need to use the correct query syntax
+    // Let's try using the repository pattern instead
+    $entries = Entry::query()->collection('blog')->get();
     
     // Filter by category
     if ($request->has('filter.categories:contains')) {
         $category = $request->input('filter.categories:contains');
-        $query->where('categories', 'like', "%$category%");
+        $entries = $entries->filter(function ($entry) use ($category) {
+            $categories = $entry->get('categories', []);
+            if (is_string($categories)) {
+                $categories = [$categories];
+            }
+            return in_array($category, $categories);
+        });
     }
     
     // Filter by title
     if ($request->has('filter.title:contains')) {
         $title = $request->input('filter.title:contains');
-        $query->where('title', 'like', "%$title%");
+        $entries = $entries->filter(function ($entry) use ($title) {
+            return str_contains(strtolower($entry->get('title', '')), strtolower($title));
+        });
     }
+    
+    // Get total count after filtering
+    $total = $entries->count();
     
     // Pagination
     $page = $request->input('page', 1);
     $perPage = 6;
     $offset = ($page - 1) * $perPage;
     
-    $total = $query->count();
-    $entries = $query->offset($offset)->limit($perPage)->get();
+    // Apply pagination - ensure we get a countable collection
+    $entries = $entries->slice($offset, $perPage)->values();
     
     $data = $entries->map(function ($entry) {
         // Ensure categories is always an array

@@ -1,11 +1,12 @@
-title: 'Blog'
+title: Blog
 template: blog
 layout: layout
 taxonomies:
   - categories
+  - types
 revisions: false
+route: 'blog/{slug}'
+sort_dir: desc
 date_behavior:
   past: public
   future: private
-sort_dir: desc
-sort_field: published_at 

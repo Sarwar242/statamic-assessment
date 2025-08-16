@@ -1,3 +1,4 @@
-title: 'Blog Images'
+title: blog
 disk: local
-container: blog 
+allow_uploads: true
+create_folders: true

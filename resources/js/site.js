@@ -25,7 +25,7 @@ Alpine.data('blogOverview', () => ({
 
     async loadBlogs() {
         try {
-            let url = `/api/collections/blog/entries?page=${this.currentPage}`;
+            let url = `/api/collections/blog?page=${this.currentPage}`;
             if (this.selectedCategory !== 'all') {
                 url += `&filter[categories:contains]=${this.selectedCategory}`;
             }
