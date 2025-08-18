@@ -26,6 +26,73 @@
   .prose-custom {
     @apply prose prose-gray max-w-none prose-headings:text-gray-900 prose-p:text-gray-700;
   }
+  
+  /* Dynamic Cards Specific Styles */
+  .dynamic-card {
+    @apply bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-300;
+  }
+  
+  .dynamic-card:hover {
+    @apply scale-105 shadow-3xl;
+  }
+  
+  .card-status-badge {
+    @apply absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold;
+  }
+  
+  .card-status-featured {
+    @apply bg-gradient-to-r from-yellow-400 to-orange-500 text-white;
+  }
+  
+  /* Jouwklimaatkast Brand Colors */
+  .jkk-primary {
+    @apply bg-green-600 text-white;
+  }
+  
+  .jkk-primary:hover {
+    @apply bg-green-700;
+  }
+  
+  .jkk-secondary {
+    @apply bg-blue-600 text-white;
+  }
+  
+  .jkk-secondary:hover {
+    @apply bg-blue-700;
+  }
+  
+  .jkk-accent {
+    @apply bg-orange-600 text-white;
+  }
+  
+  .jkk-accent:hover {
+    @apply bg-orange-700;
+  }
+  
+  /* Icon styling for Bard sets */
+  .icon-container-primary {
+    @apply w-8 h-8 bg-green-100 rounded-full flex items-center justify-center;
+  }
+  
+  .icon-container-secondary {
+    @apply w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center;
+  }
+  
+  .icon-container-accent {
+    @apply w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center;
+  }
+  
+  .icon-primary {
+    @apply w-5 h-5 text-green-600;
+  }
+  
+  .icon-secondary {
+    @apply w-5 h-5 text-blue-600;
+  }
+  
+  .icon-accent {
+    @apply w-5 h-5 text-orange-600;
+  }
 }
 
 /* Custom animations */

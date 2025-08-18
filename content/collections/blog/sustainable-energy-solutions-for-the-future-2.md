@@ -3,7 +3,7 @@ id: c6c20327-7cbc-4b2f-9f30-b6af076e9d84
 blueprint: blog
 title: 'Sustainable Energy Solutions for the Future 2'
 excerpt: 'Sustainable Energy Solutions for the Future .....'
-featured_image: images/pexels-ameruverse-digital-marketing-media-1477166.jpg
+featured_image:  'blog/images/climate-cabinet-main.jpg'
 author_name: Sarwar
 published_at: '2025-08-14'
 featured: true

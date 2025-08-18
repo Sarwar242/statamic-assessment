@@ -19,6 +19,11 @@ return [
                 'allowed_sorts' => ['title', 'published_at', 'featured'],
                 'allowed_fields' => ['title', 'slug', 'excerpt', 'content', 'featured_image', 'author_name', 'published_at', 'categories', 'featured'],
             ],
+            'cards' => [
+                'allowed_filters' => ['status', 'title', 'priority'],
+                'allowed_sorts' => ['title', 'priority', 'status'],
+                'allowed_fields' => ['title', 'slug', 'subtitle', 'excerpt', 'content', 'featured_image', 'gallery', 'priority', 'status'],
+            ],
         ],
         'taxonomies' => [
             'categories' => [

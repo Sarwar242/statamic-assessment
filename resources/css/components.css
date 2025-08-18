@@ -23,6 +23,7 @@
     width: 40px;
     height: 40px;
     transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
 }
 
 .swiper-button-next:hover,
@@ -40,11 +41,49 @@
 .swiper-pagination-bullet {
     background-color: rgba(255, 255, 255, 0.8);
     opacity: 0.6;
+    width: 12px;
+    height: 12px;
+    transition: all 0.3s ease;
 }
 
 .swiper-pagination-bullet-active {
     background-color: white;
     opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Enhanced Swiper for Dynamic Cards */
+.dynamic-card .swiper {
+    border-radius: 24px 24px 0 0;
+}
+
+.dynamic-card .swiper-button-next,
+.dynamic-card .swiper-button-prev {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(59, 130, 246, 0.9));
+    color: white;
+    backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.dynamic-card .swiper-button-next:hover,
+.dynamic-card .swiper-button-prev:hover {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 1), rgba(59, 130, 246, 1));
+    transform: scale(1.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.dynamic-card .swiper-pagination {
+    bottom: 16px;
+}
+
+.dynamic-card .swiper-pagination-bullet {
+    background: linear-gradient(135deg, #22c55e, #3b82f6);
+    opacity: 0.5;
+}
+
+.dynamic-card .swiper-pagination-bullet-active {
+    opacity: 1;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
 }
 
 /* Smooth transitions for Alpine.js */
