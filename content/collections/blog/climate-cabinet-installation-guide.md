@@ -4,11 +4,11 @@ blueprint: blog
 title: 'Climate Cabinet Installation Guide'
 slug: climate-cabinet-installation-guide
 excerpt: 'Step-by-step guide for installing your new climate cabinet and optimizing energy efficiency.'
-featured_image: blog/images/placeholder.jpg
+featured_image: blog/images/climate-cabinet-main.jpg
+
 author_name: 'Peter Peterson'
 published_at: '2024-01-10'
 categories:
-  - install-category-001
   - sustainability
 featured: false
 seo_description: 'Learn how to properly install a climate cabinet for maximum energy efficiency and performance.'

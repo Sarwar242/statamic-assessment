@@ -11,8 +11,10 @@ gallery:
   - cards/images/climate-cabinet-main.jpg
 priority: 1
 status: featured
-updated_by: b62b5300-d21f-4b70-a602-80b0fa37b694
-updated_at: 1755510618
+updated_by: cb003be2-4121-4420-8b9e-72f9c726f90c
+updated_at: 1755530477
+types:
+  - type1
 content:
   -
     type: paragraph
@@ -24,7 +26,7 @@ content:
         text: 'Transform your space with our state-of-the-art climate cabinet technology designed for maximum efficiency and sustainability.'
   -
     type: text
-    text: |
+    text: |-
       title: "Key Features"
       items:
       -

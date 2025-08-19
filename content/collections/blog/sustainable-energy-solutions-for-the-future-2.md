@@ -3,15 +3,17 @@ id: c6c20327-7cbc-4b2f-9f30-b6af076e9d84
 blueprint: blog
 title: 'Sustainable Energy Solutions for the Future 2'
 excerpt: 'Sustainable Energy Solutions for the Future .....'
-featured_image:  'blog/images/climate-cabinet-main.jpg'
-author_name: Sarwar
+
 published_at: '2025-08-14'
 featured: true
 seo_description: 'Explore sustainable energy solutions and renewable technologies that are shaping the future of energy production.'
 updated_by: cb003be2-4121-4420-8b9e-72f9c726f90c
-updated_at: 1755365792
+updated_at: 1755627178
 categories:
   - technology
+  - sustainability
+author_name: Sarwar
+featured_image: images/0d94a90cca164b359bc1c88530c16e24.jpg
 ---
 # Sustainable Energy Solutions for the Future
 

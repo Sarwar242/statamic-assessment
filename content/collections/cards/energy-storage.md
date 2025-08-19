@@ -7,8 +7,10 @@ excerpt: 'Advanced battery storage solutions that maximize your energy independe
 featured_image: cards/images/LyngvigLighthouse.jpg
 priority: 3
 status: active
-updated_by: b62b5300-d21f-4b70-a602-80b0fa37b694
-updated_at: 1755512499
+updated_by: cb003be2-4121-4420-8b9e-72f9c726f90c
+updated_at: 1755530513
+types:
+  - type2
 content:
   -
     type: paragraph
@@ -20,7 +22,7 @@ content:
         text: 'Take control of your energy future with our smart energy storage systems that work seamlessly with solar panels and grid power.'
   -
     type: text
-    text: |
+    text: |-
       title: "Smart Features"
       items:
       -

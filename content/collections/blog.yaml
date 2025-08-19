@@ -3,7 +3,6 @@ template: blog
 layout: layout
 taxonomies:
   - categories
-  - types
 revisions: false
 route: 'blog/{slug}'
 sort_dir: desc

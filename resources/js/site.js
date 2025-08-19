@@ -184,6 +184,25 @@ Alpine.data('blogOverview', () => ({
             month: 'long',
             day: 'numeric'
         });
+    },
+
+    computeFeaturedImageUrl(value) {
+        if (!value) return '/images/placeholder.jpg';
+        if (typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('/'))){
+            return value;
+        }
+        if (typeof value === 'string') {
+            if (value.startsWith('blog/')) return `/assets/${value}`;
+            if (value.startsWith('images/')) return `/assets/blog/${value}`;
+            return `/assets/blog/${value}`;
+        }
+        if (Array.isArray(value) && value.length > 0) {
+            const first = value[0];
+            if (typeof first === 'string') return first.startsWith('/') ? first : `/assets/${first}`;
+            if (first && typeof first.path === 'string') return first.path.startsWith('/') ? first.path : `/assets/${first.path}`;
+            if (first && typeof first.url === 'string') return first.url;
+        }
+        return '/images/placeholder.jpg';
     }
 }));
 
@@ -233,4 +252,24 @@ window.formatDate = (dateString) => {
         month: 'long',
         day: 'numeric'
     });
+};
+
+// Make image URL helper available globally for Alpine expressions
+window.computeFeaturedImageUrl = (value) => {
+    if (!value) return '/images/placeholder.jpg';
+    if (typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('/'))){
+        return value;
+    }
+    if (typeof value === 'string') {
+        if (value.startsWith('blog/')) return `/assets/${value}`;
+        if (value.startsWith('images/')) return `/assets/blog/${value}`;
+        return `/assets/blog/${value}`;
+    }
+    if (Array.isArray(value) && value.length > 0) {
+        const first = value[0];
+        if (typeof first === 'string') return first.startsWith('/') ? first : `/assets/${first}`;
+        if (first && typeof first.path === 'string') return first.path.startsWith('/') ? first.path : `/assets/${first.path}`;
+        if (first && typeof first.url === 'string') return first.url;
+    }
+    return '/images/placeholder.jpg';
 };

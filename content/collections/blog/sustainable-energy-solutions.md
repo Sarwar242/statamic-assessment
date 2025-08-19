@@ -4,14 +4,17 @@ blueprint: blog
 title: 'Sustainable Energy Solutions for the Future'
 slug: sustainable-energy-solutions
 excerpt: 'Discover how modern technologies help us transition to sustainable energy sources and create a greener future.'
-featured_image: 'blog/images/placeholder.jpg'
+gallery:
+  - blog/images/climate-cabinet-main.jpg
+  - blog/images/climate-cabinet-main.jpg
 author_name: 'John Johnson'
 published_at: '2024-01-15'
 categories:
-  - sustain-category-001
-  - tech-category-001
+  - technology
 featured: true
 seo_description: 'Explore sustainable energy solutions and renewable technologies that are shaping the future of energy production.'
+updated_by: cb003be2-4121-4420-8b9e-72f9c726f90c
+updated_at: 1755624835
 ---
 # Sustainable Energy Solutions for the Future
 

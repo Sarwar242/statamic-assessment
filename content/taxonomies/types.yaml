@@ -4,4 +4,5 @@ preview_targets:
     label: Term
     url: '{permalink}'
     refresh: true
+template: cards
 layout: layout

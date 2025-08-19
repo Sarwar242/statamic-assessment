@@ -1,9 +1,11 @@
 title: 'Dynamic Cards'
 template: cards
 layout: layout
+taxonomies:
+  - types
 revisions: false
 route: 'cards/{slug}'
 sort_dir: asc
 date_behavior:
   past: public
-  future: private 
+  future: private

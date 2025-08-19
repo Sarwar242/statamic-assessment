@@ -56,7 +56,8 @@ sections:
         handle: categories
         field:
           type: terms
-          taxonomies: categories
+          taxonomies:
+            - categories
           display: 'Categories'
           mode: select
           multiple: true
