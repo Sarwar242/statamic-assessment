@@ -254,6 +254,67 @@ Alpine.data('dynamicCard', () => ({
     }
 }));
 
+Alpine.data('cardsOverview', () => ({
+    cards: [],
+    searchQuery: '',
+    loading: true,
+
+    async init() {
+        await this.loadCards();
+        this.loading = false;
+    },
+
+    async loadCards() {
+        try {
+            const response = await fetch('/api/collections/cards');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+            this.cards = data.data || [];
+        } catch (error) {
+            console.error('Error loading cards:', error);
+            this.loadFallbackData();
+        }
+    },
+
+    loadFallbackData() {
+        this.cards = [
+            {
+                id: 1,
+                title: 'Climate Solution 1',
+                subtitle: 'Efficient Cooling',
+                excerpt: 'Advanced cooling solution for sustainable environments.',
+                featured_image: '/images/placeholder.jpg',
+                priority: 1,
+                status: 'featured',
+                slug: 'climate-solution-1'
+            }
+        ];
+    },
+
+    getFilteredCards() {
+        if (!Array.isArray(this.cards)) return [];
+        
+        let filtered = [...this.cards];
+        
+        if (this.searchQuery) {
+            const query = this.searchQuery.toLowerCase();
+            filtered = filtered.filter(card => 
+                card.title.toLowerCase().includes(query) || 
+                (card.subtitle && card.subtitle.toLowerCase().includes(query)) ||
+                (card.excerpt && card.excerpt.toLowerCase().includes(query))
+            );
+        }
+        
+        return filtered;
+    },
+
+    async search() {
+        this.loading = true;
+        await this.loadCards();
+        this.loading = false;
+    }
+}));
+
 // Start Alpine
 Alpine.start();
 

@@ -1,7 +1,7 @@
 {{ layout = "layout" }}
 
 <div class="bg-gradient-to-br from-green-50 to-emerald-100 min-h-screen py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-data="cardsOverview">
         <!-- Header -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-gray-900 mb-4">Our Climate Solutions</h1>
@@ -10,59 +10,84 @@
             </p>
         </div>
 
-                <!-- Cards Search and Filter Section -->
+        <!-- Cards Search and Filter Section -->
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <div class="relative max-w-md mx-auto">
+                    <input 
+                        type="text" 
+                        x-model="searchQuery"
+                        @keyup.enter="search()"
+                        placeholder="Search solutions..." 
+                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                    >
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div x-show="loading" class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                <p class="mt-2 text-gray-600">Loading solutions...</p>
+            </div>
+
             <!-- Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {{ collection:cards sort="priority" }}
-                <article class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                    <!-- Featured Image -->
-                    <div class="relative h-48 bg-gray-200">
-                        {{ if featured_image }}
-                            <img src="{{ featured_image }}" alt="{{ title }}" class="w-full h-full object-cover">
-                        {{ else }}
-                            <div class="w-full h-full bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center">
-                                <span class="text-gray-500">No Image</span>
-                            </div>
-                        {{ /if }}
-                        
-                        {{ if status == "featured" }}
-                            <div class="absolute top-4 left-4">
+                <template x-for="card in getFilteredCards()" :key="card.id">
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                        <!-- Featured Image -->
+                        <div class="relative h-48 bg-gray-200">
+                            <img 
+                                :src="computeImageUrl(card.featured_image)"
+                                :alt="card.title"
+                                class="w-full h-full object-cover"
+                            >
+                            <div x-show="card.status === 'featured'" class="absolute top-4 left-4">
                                 <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-yellow-500 rounded-full">
                                     Featured
                                 </span>
                             </div>
-                        {{ /if }}
-                    </div>
+                        </div>
 
-                    <!-- Content -->
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{{ title }}</h3>
-                        {{ if subtitle }}
-                            <p class="text-gray-600 mb-2 font-medium">{{ subtitle }}</p>
-                        {{ /if }}
-                        <p class="text-gray-600 mb-4 line-clamp-3">{{ excerpt }}</p>
-                        
-                        <!-- Meta Info -->
-                        <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                            <span>Priority: {{ priority }}</span>
-                            <span class="capitalize">{{ status }}</span>
-                    </div>
+                        <!-- Content -->
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2" x-text="card.title"></h3>
+                            <p x-show="card.subtitle" class="text-gray-600 mb-2 font-medium" x-text="card.subtitle"></p>
+                            <p class="text-gray-600 mb-4 line-clamp-3" x-text="card.excerpt"></p>
+                            
+                            <!-- Meta Info -->
+                            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                <span x-text="'Priority: ' + card.priority"></span>
+                                <span class="capitalize" x-text="card.status"></span>
+                            </div>
 
-                        <!-- Read More Button -->
-                        <a href="/cards/{{ slug }}" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors duration-200">
-                            Learn More
-                            <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-                {{ /collection:cards }}
+                            <!-- Read More Button -->
+                            <a 
+                                :href="'/cards/' + card.slug"
+                                class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors duration-200"
+                            >
+                                Learn More
+                                <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+                </template>
             </div>
-                </div>
 
-        <!-- Load More Button (if needed) -->
+            <!-- No Results Message -->
+            <div x-show="!loading && getFilteredCards().length === 0" class="text-center py-12">
+                <p class="text-gray-500 text-lg">No solutions found.</p>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
         <div class="text-center mt-12">
             <p class="text-gray-600 text-lg">
                 Ready to transform your space with sustainable climate solutions?
@@ -70,66 +95,91 @@
             <a href="/contact" class="inline-block mt-4 bg-gradient-to-r from-green-600 to-blue-600 text-white py-3 px-8 rounded-xl font-medium hover:from-green-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105">
                 Get Started Today
             </a>
-                            </div>
-                        </div>
-                    </div>
-
-<!-- Modal Templates for Actions -->
-<div x-data="{ showQuoteModal: false, showConsultationModal: false, activeService: '' }" class="hidden">
-    <!-- Quote Modal -->
-    <div x-show="showQuoteModal" 
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6" @click.away="showQuoteModal = false">
-            <h3 class="text-xl font-bold mb-4">Request Quote</h3>
-            <p class="text-gray-600 mb-4">Get a personalized quote for <span x-text="activeService"></span></p>
-            <div class="flex space-x-3">
-                <button @click="showQuoteModal = false" class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
-                    Cancel
-                </button>
-                <button class="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
-                    Submit Request
-                            </button>
-                            </div>
-                        </div>
-                    </div>
-
-    <!-- Consultation Modal -->
-    <div x-show="showConsultationModal" 
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6" @click.away="showConsultationModal = false">
-            <h3 class="text-xl font-bold mb-4">Schedule Consultation</h3>
-            <p class="text-gray-600 mb-4">Book a free consultation for <span x-text="activeService"></span></p>
-            <div class="flex space-x-3">
-                <button @click="showConsultationModal = false" class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
-                    Cancel
-                </button>
-                <button class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-                    Schedule Now
-                        </button>
-            </div>
         </div>
     </div>
-</div> 
+</div>
 
 <script>
-// Global functions for modal actions
-window.openQuoteModal = function(service) {
-    Alpine.store('modals', {
-        showQuoteModal: true,
-        activeService: service
+// Check if Alpine is loaded
+if (typeof Alpine === 'undefined') {
+    // If Alpine isn't loaded yet, wait for it
+    document.addEventListener('alpine:init', () => {
+        initializeCardsComponent();
     });
+} else {
+    // If Alpine is already loaded, initialize immediately
+    initializeCardsComponent();
 }
 
-window.openConsultationModal = function(service) {
-    Alpine.store('modals', {
-        showConsultationModal: true,
-        activeService: service
-    });
+function initializeCardsComponent() {
+    Alpine.data('cardsOverview', () => ({
+        cards: [],
+        searchQuery: '',
+        loading: true,
+
+        async init() {
+            await this.loadCards();
+            this.loading = false;
+        },
+
+        async loadCards() {
+            try {
+                const response = await fetch('/api/collections/cards');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                this.cards = data.data || [];
+            } catch (error) {
+                console.error('Error loading cards:', error);
+                this.loadFallbackData();
+            }
+        },
+
+        loadFallbackData() {
+            this.cards = [
+                {
+                    id: 1,
+                    title: 'Climate Solution 1',
+                    subtitle: 'Efficient Cooling',
+                    excerpt: 'Advanced cooling solution for sustainable environments.',
+                    featured_image: '/images/placeholder.jpg',
+                    priority: 1,
+                    status: 'featured',
+                    slug: 'climate-solution-1'
+                },
+                // Add more fallback cards as needed
+            ];
+        },
+
+        getFilteredCards() {
+            if (!Array.isArray(this.cards)) return [];
+            
+            let filtered = [...this.cards];
+            
+            if (this.searchQuery) {
+                const query = this.searchQuery.toLowerCase();
+                filtered = filtered.filter(card => 
+                    card.title.toLowerCase().includes(query) || 
+                    (card.subtitle && card.subtitle.toLowerCase().includes(query)) ||
+                    (card.excerpt && card.excerpt.toLowerCase().includes(query))
+                );
+            }
+            
+            return filtered;
+        },
+
+        computeImageUrl(value) {
+            if (!value) return '/images/placeholder.jpg';
+            if (typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('/'))) {
+                return value;
+            }
+            return `/assets/${value}`;
+        },
+
+        async search() {
+            this.loading = true;
+            await this.loadCards();
+            this.loading = false;
+        }
+    }));
 }
-</script> 
+</script>

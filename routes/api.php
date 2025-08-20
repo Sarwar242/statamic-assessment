@@ -25,4 +25,7 @@ use App\Http\Controllers\Api\BlogController;
 Route::get('/collections/blog', [BlogController::class, 'index']);
 
 // Categories Taxonomy API
-Route::get('/taxonomies/categories/terms', [BlogController::class, 'categories']); 
+Route::get('/taxonomies/categories/terms', [BlogController::class, 'categories']);
+
+// Cards Collection API
+Route::get('/collections/cards', [App\Http\Controllers\Api\CardsController::class, 'index']);
