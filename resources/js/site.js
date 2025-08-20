@@ -193,7 +193,7 @@ Alpine.data('blogOverview', () => ({
         }
         if (typeof value === 'string') {
             if (value.startsWith('blog/')) return `/assets/${value}`;
-            if (value.startsWith('images/')) return `/assets/blog/${value}`;
+            if (value.startsWith('images/')) return `/assets/${value}`;
             return `/assets/blog/${value}`;
         }
         if (Array.isArray(value) && value.length > 0) {

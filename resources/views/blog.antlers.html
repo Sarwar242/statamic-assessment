@@ -388,7 +388,7 @@ document.addEventListener('alpine:init', () => {
             // If API returns path like 'blog/images/...' or 'images/...'
             if (typeof value === 'string') {
                 if (value.startsWith('blog/')) return `/assets/${value}`;
-                return `/assets/blog/${value}`;
+                return `/assets/${value}`;
             }
             // If API returns array from assets field
             if (Array.isArray(value) && value.length > 0) {

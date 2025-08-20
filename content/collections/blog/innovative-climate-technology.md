@@ -4,7 +4,7 @@ blueprint: blog
 title: 'Innovative Climate Technology'
 slug: innovative-climate-technology
 excerpt: 'Explore the latest developments in climate technology and how they contribute to a more sustainable world.'
-featured_image: images/pexels-ameruverse-digital-marketing-media-1477166.jpg
+featured_image: images/climate-cabinet-main.jpg
 gallery:
   - blog/images/climate-cabinet-main.jpg
   - blog/images/climate-cabinet-main.jpg

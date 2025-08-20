@@ -13,7 +13,7 @@ categories:
   - technology
   - sustainability
 author_name: Sarwar
-featured_image: images/0d94a90cca164b359bc1c88530c16e24.jpg
+featured_image: blog/images/0d94a90cca164b359bc1c88530c16e24.jpg
 ---
 # Sustainable Energy Solutions for the Future
 

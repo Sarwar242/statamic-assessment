@@ -1,172 +1,201 @@
-title: 'Dynamic Card'
-sections:
+title: Card
+tabs:
   main:
     display: Main
-    fields:
-      - handle: title
-        field:
-          type: text
-          display: 'Card Title'
-          validate: required
-      - handle: slug
-        field:
-          type: slug
-          display: 'Slug'
-          validate: required
-          generate: true
-      - handle: subtitle
-        field:
-          type: text
-          display: 'Subtitle'
-      - handle: featured_image
-        field:
-          type: assets
-          container: cards
-          folder: images
-          max_files: 1
-          display: 'Featured Image'
-          validate: required
-      - handle: gallery
-        field:
-          type: assets
-          container: cards
-          folder: images
-          max_files: 10
-          display: 'Image Gallery'
-          instructions: 'Additional images for carousel'
-      - handle: excerpt
-        field:
-          type: textarea
-          display: 'Short Description'
-          rows: 3
-          validate: required
-      - handle: content
-        field:
-          type: bard
-          display: 'Rich Content'
-          validate: required
-          sets:
-            icon_list:
-              display: 'Icon List'
-              fields:
-                - handle: title
-                  field:
-                    type: text
-                    display: 'List Title'
-                    validate: required
-                - handle: items
-                  field:
-                    type: replicator
-                    display: 'List Items'
-                    sets:
-                      icon_item:
-                        display: 'Icon Item'
-                        fields:
-                          - handle: icon
-                            field:
-                              type: select
-                              display: 'Icon'
-                              options:
-                                check: 'Check Mark'
-                                lightning: 'Lightning'
-                                dollar: 'Dollar Sign'
-                                shield: 'Shield'
-                                star: 'Star'
-                                heart: 'Heart'
-                                leaf: 'Leaf'
-                                cog: 'Settings'
-                          - handle: text
-                            field:
-                              type: text
-                              display: 'Text'
-                              validate: required
-                          - handle: color
-                            field:
-                              type: select
-                              display: 'Color Theme'
-                              default: 'primary'
-                              options:
-                                primary: 'Primary (Green)'
-                                secondary: 'Secondary (Blue)'
-                                accent: 'Accent (Orange)'
-            accordion:
-              display: 'Accordion'
-              fields:
-                - handle: items
-                  field:
-                    type: replicator
-                    display: 'Accordion Items'
-                    sets:
-                      accordion_item:
-                        display: 'Accordion Item'
-                        fields:
-                          - handle: title
-                            field:
-                              type: text
-                              display: 'Title'
-                              validate: required
-                          - handle: content
-                            field:
-                              type: markdown
-                              display: 'Content'
-                              validate: required
-            cta_button:
-              display: 'Call to Action'
-              fields:
-                - handle: text
-                  field:
-                    type: text
-                    display: 'Button Text'
-                    validate: required
-                - handle: style
-                  field:
-                    type: select
-                    display: 'Button Style'
-                    default: 'primary'
-                    options:
-                      primary: 'Primary'
-                      secondary: 'Secondary'
-                      accent: 'Accent'
-                - handle: size
-                  field:
-                    type: select
-                    display: 'Button Size'
-                    default: 'normal'
-                    options:
-                      small: 'Small'
-                      normal: 'Normal'
-                      large: 'Large'
-                - handle: url
-                  field:
-                    type: text
-                    display: 'URL (optional)'
-                - handle: action
-                  field:
-                    type: text
-                    display: 'JavaScript Action (optional)'
-                    instructions: 'e.g., openModal(), requestQuote()'
-          toolbar_mode: fixed
-          link_noopener: false
-          link_noreferrer: false
-          target_blank: false
-          reading_time: false
-          fullscreen: true
-          allow_source: true
-          enable_input_rules: true
-          enable_paste_rules: true
-          antlers: false
-      - handle: priority
-        field:
-          type: integer
-          display: 'Display Priority'
-          default: 10
-          instructions: 'Lower numbers appear first'
-      - handle: status
-        field:
-          type: select
-          display: 'Status'
-          default: 'active'
-          options:
-            active: 'Active'
-            inactive: 'Inactive'
-            featured: 'Featured' 
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              display: 'Card Title'
+              validate:
+                - required
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: required
+              display: Slug
+          -
+            handle: subtitle
+            field:
+              type: text
+              display: Subtitle
+          -
+            handle: featured_image
+            field:
+              type: assets
+              container: cards
+              folder: images
+              max_files: 1
+              display: 'Featured Image'
+              validate: required
+          -
+            handle: gallery
+            field:
+              type: assets
+              container: cards
+              folder: images
+              max_files: 10
+              display: 'Image Gallery'
+              instructions: 'Additional images for carousel'
+          -
+            handle: excerpt
+            field:
+              type: textarea
+              display: 'Short Description'
+              rows: 3
+              validate: required
+          -
+            handle: content
+            field:
+              type: bard
+              display: 'Rich Content'
+              validate: required
+              sets:
+                icon_list:
+                  display: 'Icon List'
+                  fields:
+                    -
+                      handle: title
+                      field:
+                        type: text
+                        display: 'List Title'
+                        validate: required
+                    -
+                      handle: items
+                      field:
+                        type: replicator
+                        display: 'List Items'
+                        sets:
+                          icon_item:
+                            display: 'Icon Item'
+                            fields:
+                              -
+                                handle: icon
+                                field:
+                                  type: select
+                                  display: Icon
+                                  options:
+                                    check: 'Check Mark'
+                                    lightning: Lightning
+                                    dollar: 'Dollar Sign'
+                                    shield: Shield
+                                    star: Star
+                                    heart: Heart
+                                    leaf: Leaf
+                                    cog: Settings
+                              -
+                                handle: text
+                                field:
+                                  type: text
+                                  display: Text
+                                  validate: required
+                              -
+                                handle: color
+                                field:
+                                  type: select
+                                  display: 'Color Theme'
+                                  default: primary
+                                  options:
+                                    primary: 'Primary (Green)'
+                                    secondary: 'Secondary (Blue)'
+                                    accent: 'Accent (Orange)'
+                accordion:
+                  display: Accordion
+                  fields:
+                    -
+                      handle: items
+                      field:
+                        type: replicator
+                        display: 'Accordion Items'
+                        sets:
+                          accordion_item:
+                            display: 'Accordion Item'
+                            fields:
+                              -
+                                handle: title
+                                field:
+                                  type: text
+                                  display: Title
+                                  validate: required
+                              -
+                                handle: content
+                                field:
+                                  type: markdown
+                                  display: Content
+                                  validate: required
+                cta_button:
+                  display: 'Call to Action'
+                  fields:
+                    -
+                      handle: text
+                      field:
+                        type: text
+                        display: 'Button Text'
+                        validate: required
+                    -
+                      handle: style
+                      field:
+                        type: select
+                        display: 'Button Style'
+                        default: primary
+                        options:
+                          primary: Primary
+                          secondary: Secondary
+                          accent: Accent
+                    -
+                      handle: size
+                      field:
+                        type: select
+                        display: 'Button Size'
+                        default: normal
+                        options:
+                          small: Small
+                          normal: Normal
+                          large: Large
+                    -
+                      handle: url
+                      field:
+                        type: text
+                        display: 'URL (optional)'
+                    -
+                      handle: action
+                      field:
+                        type: text
+                        display: 'JavaScript Action (optional)'
+                        instructions: 'e.g., openModal(), requestQuote()'
+          -
+            handle: priority
+            field:
+              type: integer
+              display: 'Display Priority'
+              default: 10
+              instructions: 'Lower numbers appear first'
+          -
+            handle: status
+            field:
+              type: select
+              display: Status
+              default: active
+              options:
+                active: Active
+                inactive: Inactive
+                featured: Featured
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: types
+            field:
+              type: terms
+              taxonomies:
+                - types
+              display: Types
+              mode: select
