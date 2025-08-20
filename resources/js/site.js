@@ -198,11 +198,24 @@ Alpine.data('blogOverview', () => ({
         }
         if (Array.isArray(value) && value.length > 0) {
             const first = value[0];
-            if (typeof first === 'string') return first.startsWith('/') ? first : `/assets/${first}`;
+            if (typeof first === 'string') return first.startsWith('/') ? first : `/assets/${first.path}`;
             if (first && typeof first.path === 'string') return first.path.startsWith('/') ? first.path : `/assets/${first.path}`;
             if (first && typeof first.url === 'string') return first.url;
         }
         return '/images/placeholder.jpg';
+    },
+
+    getFirstCategory(categories) {
+        if (!categories || !Array.isArray(categories) || categories.length === 0) return null;
+        
+        const firstCat = categories[0];
+        if (typeof firstCat === 'string') {
+            return { title: firstCat, slug: firstCat };
+        } else if (firstCat && firstCat.title && firstCat.slug) {
+            return firstCat;
+        }
+        
+        return null;
     }
 }));
 
@@ -272,4 +285,18 @@ window.computeFeaturedImageUrl = (value) => {
         if (first && typeof first.url === 'string') return first.url;
     }
     return '/images/placeholder.jpg';
+};
+
+// Make category helper available globally for Alpine expressions
+window.getFirstCategory = (categories) => {
+    if (!categories || !Array.isArray(categories) || categories.length === 0) return null;
+    
+    const firstCat = categories[0];
+    if (typeof firstCat === 'string') {
+        return { title: firstCat, slug: firstCat };
+    } else if (firstCat && firstCat.title && firstCat.slug) {
+        return firstCat;
+    }
+    
+    return null;
 };
