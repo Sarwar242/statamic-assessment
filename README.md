@@ -103,8 +103,11 @@ npm run dev
 ```
 
 3. Access the Control Panel:
-- Visit: `http://your-site.test/cp`
-- Default login: admin@admin.com (should be changed)
+- Visit: `http://localhost:8000/cp`
+- create user to login: 
+```bash
+php artisan statamic:make:user
+```
 
 ## 7. Best Practices
 
